@@ -7,6 +7,9 @@
 (setq emacs-load-start-time (current-time))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
+;;add my config directory
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/private"))
+
 ;;----------------------------------------------------------------------------
 ;; Which functionality to enable (use t or nil for true and false)
 ;;----------------------------------------------------------------------------
@@ -169,3 +172,5 @@
 ;;; no-byte-compile: t
 ;;; End:
 (put 'erase-buffer 'disabled nil)
+
+(load "~/.emacs.d/private/myconfig.el")

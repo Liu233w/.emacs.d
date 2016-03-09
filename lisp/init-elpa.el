@@ -290,4 +290,8 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'quack) ;; for scheme
 (require-package 'hydra)
 
+;;my package
+(require-package 'slime)
+(require-package 'ace-jump-mode)
+
 (provide 'init-elpa)
