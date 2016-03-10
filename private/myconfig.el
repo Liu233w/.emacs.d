@@ -19,7 +19,13 @@
 
 ;;设置临时文件夹位置，否则会报错
 (when *win64*
-  (setq temporary-file-directory "c:/users/wwwlsmcom/appData/local/temp"))
+  (let ((shellout (shell-command-to-string "set localappdata")))
+    (setq temporary-file-directory
+          (concatenate 'string
+                       (substring shellout
+                                  (+ 1 (position ?= shellout)))
+                       "\\temp\\"))))
+;;  (setq temporary-file-directory "c:/users/wwwlsmcom/appData/local/temp"))
 
 ;;设置窗口位置为屏库左上角(0,0)
 ;;(set-frame-position (selected-frame) 0 0)
@@ -220,3 +226,6 @@ occurence of CHAR."
                     ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
                     ))
              ) t)
+
+;;在evil中使用C-q回到normal模式，如果想要输入特殊字符请使用C-q
+(define-key evil-insert-state-map (kbd "C-q") 'evil-force-normal-state)
