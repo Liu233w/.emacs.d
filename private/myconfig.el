@@ -25,8 +25,11 @@
 ;;(set-frame-position (selected-frame) 0 0)
 ;;设置宽和高,我的十寸小本是110,33,大家可以调整这个参数来适应自己屏幕大小
 (when *win64*
-  (set-frame-width (selected-frame) 80)
-  (set-frame-height (selected-frame) 20))
+  (defun reset-fream-size ()
+    (set-frame-width (selected-frame) 80)
+    (set-frame-height (selected-frame) 20))
+  (add-hook 'new-frame 'reset-fream-size)
+  (reset-fream-size))
 
 ;;; 设置行号宽度
 (setq linum-format 'dynamic)
