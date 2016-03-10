@@ -19,7 +19,13 @@
 
 ;;设置临时文件夹位置，否则会报错
 (when *win64*
-  (setq temporary-file-directory "c:/users/wwwlsmcom/appData/local/temp"))
+  (let ((shellout (shell-command-to-string "set localappdata")))
+    (setq temporary-file-directory
+          (concatenate 'string
+                       (substring shellout
+                                  (+ 1 (position ?= shellout)))
+                       "\\temp\\"))))
+;;  (setq temporary-file-directory "c:/users/wwwlsmcom/appData/local/temp"))
 
 ;;设置窗口位置为屏库左上角(0,0)
 ;;(set-frame-position (selected-frame) 0 0)
