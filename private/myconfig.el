@@ -223,3 +223,6 @@ occurence of CHAR."
                     ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
                     ))
              ) t)
+
+;;在evil中使用C-q回到normal模式，如果想要输入特殊字符请使用C-q
+(define-key evil-insert-state-map (kbd "C-q") 'evil-force-normal-state)
