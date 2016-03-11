@@ -1,9 +1,3 @@
-
-;;加载slime
-;;(slime-setup)
-(unless *cygwin*
-  (require 'slime-autoloads))
-
 ;;光标在行首时注释此行
 ;;说明见http://cmdblock.blog.51cto.com/415170/557978/
 (defun qiang-comment-dwim-line (&optional arg)
@@ -29,7 +23,7 @@
 ;;设置窗口位置为屏库左上角(0,0)
 ;;(set-frame-position (selected-frame) 0 0)
 ;;设置宽和高,我的十寸小本是110,33,大家可以调整这个参数来适应自己屏幕大小
-(when *win64*
+(when (or *win64* *cygwin*)
   (defun reset-fream-size ()
     (set-frame-width (selected-frame) 80)
     (set-frame-height (selected-frame) 20))
@@ -40,7 +34,7 @@
 (server-start)
 
 ;;setting Font
-(if *win64*
+(if (or *win64* *cygwin*)
     (progn
       ;; Setting English Font
       (set-face-attribute
@@ -74,9 +68,6 @@
                      plain-tex-mode))
            (let ((mark-even-if-inactive transient-mark-mode))
              (indent-region (region-beginning) (region-end) nil))))))
-
-;;启动server
-(server-start)
 
 ;;ace-jump-mode
 (define-key global-map (kbd "C-*") 'ace-jump-mode)
