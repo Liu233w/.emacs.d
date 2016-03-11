@@ -1,11 +1,3 @@
-;;load add-on
-(require 'smart-compile)
-
-;;加载slime
-;;(slime-setup)
-(unless *cygwin*
-  (require 'slime-autoloads))
-
 ;;光标在行首时注释此行
 ;;说明见http://cmdblock.blog.51cto.com/415170/557978/
 (defun qiang-comment-dwim-line (&optional arg)
@@ -25,26 +17,25 @@
                        (substring shellout
                                   (+ 1 (position ?= shellout)))
                        "\\temp\\"))))
-;;  (setq temporary-file-directory "c:/users/wwwlsmcom/appData/local/temp"))
+;;  (setq temporary-file-directory "c:/users/wwwlsmcom/appData/local/temp")
+
 
 ;;设置窗口位置为屏库左上角(0,0)
 ;;(set-frame-position (selected-frame) 0 0)
 ;;设置宽和高,我的十寸小本是110,33,大家可以调整这个参数来适应自己屏幕大小
-(when *win64*
+
+(when (or *win64* *cygwin*)
   (defun reset-frame-size ()
     (interactive)
     (set-frame-width (selected-frame) 80)
     (set-frame-height (selected-frame) 20))
   (reset-frame-size))
 
-;;; 设置行号宽度
-(setq linum-format 'dynamic)
-
 ;;; 启动server，便于与tc配合
 (server-start)
 
 ;;setting Font
-(if *win64*
+(if (or *win64* *cygwin*)
     (progn
       ;; Setting English Font
       (set-face-attribute
@@ -78,19 +69,6 @@
                      plain-tex-mode))
            (let ((mark-even-if-inactive transient-mark-mode))
              (indent-region (region-beginning) (region-end) nil))))))
-
-;;配置flymake自动查错
-(autoload 'flymake-find-file-hook "flymake" "" t)
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(setq flymake-gui-warnings-enabled nil)
-(setq flymake-log-level 0)
-
-;;设置markdown
-  '(markdown-command
-   "pandoc -f markdown -t html -s -c %path%/markdown-style.css --mathjax --highlight-style espresso")
-
-;;启动server
-(server-start)
 
 ;;ace-jump-mode
 (define-key global-map (kbd "C-*") 'ace-jump-mode)
@@ -133,9 +111,6 @@ occurence of CHAR."
 ;; (setq-default pathname-coding-system 'utf-8)
 ;; (set-file-name-coding-system 'utf-8)
 (prefer-coding-system 'utf-8-auto)
-
-;;smart-compile
-(global-set-key (kbd "<f9>") 'smart-compile)
 
 ;;在shell中运行已经编译好的当前程序
 (defun run-compiled-file ()
@@ -184,48 +159,9 @@ occurence of CHAR."
 (global-set-key (kbd "C-, l") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-, a") 'mc/mark-all-like-this)
 
-;;设置光标粗细
-;;(setq cursor-type 'hollow)
-
-;;add c++11 support
-(require 'font-lock)
-
-(defun --copy-face (new-face face)
-  "Define NEW-FACE from existing FACE."
-  (copy-face face new-face)
-  (eval `(defvar ,new-face nil))
-  (set new-face new-face))
-
-(--copy-face 'font-lock-label-face  ; labels, case, public, private, proteced, namespace-tags
-             'font-lock-keyword-face)
-(--copy-face 'font-lock-doc-markup-face ; comment markups such as Javadoc-tags
-             'font-lock-doc-face)
-(--copy-face 'font-lock-doc-string-face ; comment markups
-             'font-lock-comment-face)
-
-(global-font-lock-mode t)
-(setq font-lock-maximum-decoration t)
-
-
-(add-hook 'c++-mode-hook
-          '(lambda()
-             (font-lock-add-keywords
-              nil '(;; complete some fundamental keywords
-                    ("\\<\\(void\\|unsigned\\|signed\\|char\\|short\\|bool\\|int\\|long\\|float\\|double\\)\\>" . font-lock-keyword-face)
-                    ;; add the new C++11 keywords
-                    ("\\<\\(alignof\\|alignas\\|constexpr\\|decltype\\|noexcept\\|nullptr\\|static_assert\\|thread_local\\|override\\|final\\)\\>" . font-lock-keyword-face)
-                    ("\\<\\(char[0-9]+_t\\)\\>" . font-lock-keyword-face)
-                    ;; PREPROCESSOR_CONSTANT
-                    ("\\<[A-Z]+[A-Z_]+\\>" . font-lock-constant-face)
-                    ;; hexadecimal numbers
-                    ("\\<0[xX][0-9A-Fa-f]+\\>" . font-lock-constant-face)
-                    ;; integer/float/scientific numbers
-                    ("\\<[\\-+]*[0-9]*\\.?[0-9]+\\([ulUL]+\\|[eE][\\-+]?[0-9]+\\)?\\>" . font-lock-constant-face)
-                    ;; user-types (customize!)
-                    ("\\<[A-Za-z_]+[A-Za-z_0-9]*_\\(t\\|type\\|ptr\\)\\>" . font-lock-type-face)
-                    ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
-                    ))
-             ) t)
+;;load add-on
+(require 'smart-compile)
+(global-set-key (kbd "<f9>") 'smart-compile)
 
 ;;在evil中使用C-q回到normal模式，如果想要输入特殊字符请使用C-q
 (define-key evil-insert-state-map (kbd "C-q") 'evil-force-normal-state)
