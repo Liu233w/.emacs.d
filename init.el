@@ -22,6 +22,7 @@
                    (*linux* nil)
                    (t nil)))
 
+
 ;; @see https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
 ;; Normally file-name-handler-alist is set to
 ;; (("\\`/[^/]*\\'" . tramp-completion-file-name-handler)
@@ -91,6 +92,8 @@
   (require 'init-gtags)
   ;; use evil mode (vi key binding)
   (require 'init-evil)
+  ;;my key binding are here
+  (require 'init-my-hotkeys)
   (require 'init-sh)
   (require 'init-ctags)
   (require 'init-bbdb)
@@ -164,11 +167,12 @@
  ;; If there is more than one, they won't work right.
  '(window-numbering-face ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold))) t))
 
+;;add my config
+(require 'init-my-others)
+
 (setq gc-cons-threshold best-gc-cons-threshold)
 ;;; Local Variables:
 ;;; no-byte-compile: t
 ;;; End:
 (put 'erase-buffer 'disabled nil)
 
-;;add my config
-(load "~/.emacs.d/private/myconfig.el")

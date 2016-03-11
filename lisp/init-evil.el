@@ -17,6 +17,7 @@
 (adjust-major-mode-keymap-with-evil "etags-select")
 
 (require 'evil)
+(require 'smart-compile)
 
 ;; @see https://bitbucket.org/lyro/evil/issue/342/evil-default-cursor-setting-should-default
 ;; cursor is alway black because of evil
@@ -428,7 +429,7 @@ If the character before and after CH is space or tab, CH is NOT slash"
        ;; toggle overview,  @see http://emacs.wordpress.com/2007/01/16/quick-and-dirty-code-folding/
        "ov" 'my-overview-of-current-buffer
        "or" 'open-readme-in-git-root-directory
-       "oo" 'compile
+       "oo" 'smart-compile
        "c$" 'org-archive-subtree ; `C-c $'
        ;; org-do-demote/org-do-premote support selected region
        "c<" 'org-do-promote ; `C-c C-<'
