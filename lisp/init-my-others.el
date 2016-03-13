@@ -37,7 +37,7 @@
   (set-default-font "文泉驿等宽微米黑-20"))
 
 ;; For my language code setting (UTF-8)
-(set-language-environment "utf-8")
+(set-language-environment "chinese-GBK")
 ;; (set-keyboard-coding-system 'utf-8)
 ;; (set-clipboard-coding-system 'utf-8)
 ;; (set-terminal-coding-system 'utf-8)
