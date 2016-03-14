@@ -41,10 +41,10 @@ occurence of CHAR."
 (define-key evil-insert-state-map (kbd "C-q") 'evil-force-normal-state)
 
 ;;my keys
-(nvmap :prefix ", ;"
-       "m" 'my-go-to-char
-       "c" 'ace-jump-char-mode
-       "l" 'ace-jump-line-mode
+(nvmap :prefix "SPC"
+       "gm" 'my-go-to-char
+       "gc" 'ace-jump-char-mode
+       "gl" 'ace-jump-line-mode
        )
 
 ;;扩展选择
