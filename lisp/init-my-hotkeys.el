@@ -45,6 +45,7 @@ occurence of CHAR."
        "gm" 'my-go-to-char
        "gc" 'ace-jump-char-mode
        "gl" 'ace-jump-line-mode
+       "gg" 'ace-jump-word-mode
        )
 
 ;;扩展选择
@@ -113,5 +114,9 @@ occurence of CHAR."
                      plain-tex-mode))
            (let ((mark-even-if-inactive transient-mark-mode))
              (indent-region (region-beginning) (region-end) nil))))))
+
+;;在普通和插入模式下使用C-O来在光标前插入一个换行符
+(define-key evil-insert-state-map (kbd "C-S-o") 'open-line)
+(define-key evil-normal-state-map (kbd "C-S-o") 'open-line)
 
 (provide 'init-my-hotkeys)
