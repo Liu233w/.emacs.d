@@ -51,11 +51,6 @@ occurence of CHAR."
 ;;扩展选择
 (global-set-key (kbd "C-@") 'er/expand-region)
 
-;;矩形编辑
-(global-set-key (kbd "C-, n") 'mc/mark-next-lines)
-(global-set-key (kbd "C-, l") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-, a") 'mc/mark-all-like-this)
- 
 ;;光标在行中时使用C-w和M-w复制或剪切整行
 ;;http://www.csdn123.com/html/topnews201408/54/5854.htm
 (defadvice kill-ring-save (before slickcopy activate compile)
@@ -115,8 +110,16 @@ occurence of CHAR."
            (let ((mark-even-if-inactive transient-mark-mode))
              (indent-region (region-beginning) (region-end) nil))))))
 
-;;在普通和插入模式下使用C-O来在光标前插入一个换行符
+;;在插入模式下使用C-O来在光标前插入一个换行符
 (define-key evil-insert-state-map (kbd "C-S-o") 'open-line)
-(define-key evil-normal-state-map (kbd "C-S-o") 'open-line)
+;;在普通模式下在下一行增加一个空行，但光标不移动也不进入插入模式
+(define-key evil-normal-state-map (kbd "C-S-o")
+  '(lambda () (interactive) (save-excursion (evil-open-below 1) (evil-normal-state))))
+
+;;mc-multiple-cursors
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (provide 'init-my-hotkeys)
