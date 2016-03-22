@@ -42,11 +42,16 @@ occurence of CHAR."
 
 ;;my keys
 (nvmap :prefix "SPC"
-       "gm" 'my-go-to-char
-       "gc" 'ace-jump-char-mode
-       "gl" 'ace-jump-line-mode
-       "gg" 'ace-jump-word-mode
+       "jm" 'my-go-to-char
+       "jj" 'ace-jump-char-mode
+       "jl" 'ace-jump-line-mode
+       "jw" 'ace-jump-word-mode
        )
+
+(require 'key-chord)
+(key-chord-mode 1)
+;;同时按下fd可以实现esc的功能，可以用于快速退出到普通模式
+(key-chord-define-global "fd" 'evil-escape)
 
 ;;扩展选择
 (global-set-key (kbd "C-@") 'er/expand-region)
