@@ -37,9 +37,6 @@ occurence of CHAR."
   (setq unread-command-events (list last-input-event)))
 (global-set-key (kbd "C-S-t") 'my-go-to-char)
 
-;;在evil中使用C-q回到normal模式，如果想要输入特殊字符请使用C-v
-(define-key evil-insert-state-map (kbd "C-q") 'evil-force-normal-state)
-
 ;;my keys
 (nvmap :prefix "SPC"
        "jm" 'my-go-to-char
