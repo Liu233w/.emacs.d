@@ -47,6 +47,7 @@ occurence of CHAR."
 
 (require 'key-chord)
 (key-chord-mode 1)
+(setq key-chord-two-keys-delay 0.05)
 ;;同时按下fd可以实现esc的功能，可以用于快速退出到普通模式
 (key-chord-define-global "fd" 'evil-escape)
 
