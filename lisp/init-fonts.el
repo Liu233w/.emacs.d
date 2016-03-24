@@ -31,4 +31,18 @@ DELTA should be a multiple of 10, in the units used by the
   (interactive)
   (increment-default-font-height -10))
 
+;;setting Font
+(cond
+ ((or *win64* *cygwin*)
+  ;; Setting English Font
+  (set-face-attribute
+   'default nil :font "Consolas 20")
+  ;; Chinese Font
+  (dolist (charset '(kana han cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset
+                      (font-spec :family "Microsoft Yahei" :size 21))))
+ (*linux*
+  (set-default-font "文泉驿等宽微米黑-20")))
+
 (provide 'init-fonts)

@@ -23,19 +23,6 @@
 ;;; 启动server，便于与tc配合
 (server-start)
 
-;;setting Font
-(if (or *win64* *cygwin*)
-    (progn
-      ;; Setting English Font
-      (set-face-attribute
-       'default nil :font "Consolas 20")
-      ;; Chinese Font
-      (dolist (charset '(kana han cjk-misc bopomofo))
-        (set-fontset-font (frame-parameter nil 'font)
-                          charset
-                          (font-spec :family "Microsoft Yahei" :size 21))))
-  (set-default-font "文泉驿等宽微米黑-20"))
-
 ;; For my language code setting (UTF-8)
 (set-language-environment "chinese-GBK")
 ;; (set-keyboard-coding-system 'utf-8)

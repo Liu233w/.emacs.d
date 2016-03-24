@@ -16,7 +16,7 @@
 
 (defun my-common-cc-mode-setup ()
   "setup shared by all languages (java/groovy/c++ ...)"
-  (setq c-basic-offset 4)
+  (setq c-basic-offset 2)
   ;; give me NO newline automatically after electric expressions are entered
   (setq c-auto-newline nil)
 
@@ -45,7 +45,8 @@
 
   ;; indent
   (fix-c-indent-offset-according-to-syntax-context 'substatement 0)
-  (fix-c-indent-offset-according-to-syntax-context 'func-decl-cont 0))
+  (fix-c-indent-offset-according-to-syntax-context 'func-decl-cont 0)
+  )
 
 (defun my-c-mode-setup ()
   "C/C++ only setup"
@@ -54,7 +55,7 @@
   ;; emacs-c-opening-corresponding-header-file
   (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
-  (setq cc-search-directories '("." "/usr/include" "/usr/local/include/*" "../*/include" "$WXWIN/include"))
+  (setq cc-search-directories '("." "/usr/include" "/usr/local/include/*" "../*/include" "$WXWIN/include" "$include"))
 
   ;; wxWidgets setup
   (c-set-offset 'topmost-intro-cont 'c-wx-lineup-topmost-intro-cont)
@@ -78,8 +79,20 @@
                      (string-match "^/usr/src/linux/include/.*" buffer-file-name)))
             (cppcm-reload-all)))
     ;; }}
-
-    ))
+    )
+  ;;add clang-format support
+  (require 'clang-format)
+  (when (executable-find "clang-format")
+    ;;使用clang-format作为默认排版工具
+    (local-set-key (kbd "C-M-\\") 'clang-format)
+    ;;当插入分号时自动对当前行排版
+    (local-set-key ";"
+                   '(lambda () (interactive)
+                      (clang-format-region (line-beginning-position -1) (point))
+                      (if (= (char-after (point)) (string-to-char ";"))
+                          (forward-char)
+                        (insert ";")))
+                   )))
 
 ;; donot use c-mode-common-hook or cc-mode-hook because many major-modes use this hook
 (add-hook 'c-mode-common-hook
